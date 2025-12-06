@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="shared.js"></script>
 <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -69,7 +70,7 @@
 </div>
 <!-- Action Button -->
 <div class="mt-8 w-full">
-<button class="flex h-12 w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-5 text-base font-bold tracking-wide text-white transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 dark:focus:ring-offset-background-dark">
+<button id="submitBtn" class="flex h-12 w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-5 text-base font-bold tracking-wide text-white transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 dark:focus:ring-offset-background-dark">
 <span class="truncate">Get Started</span>
 </button>
 </div>
@@ -80,4 +81,43 @@
 </div>
 </div>
 </div>
+<script>
+  document.getElementById('submitBtn').addEventListener('click', function() {
+    const nameInput = document.getElementById('name-input').value.trim();
+    const roleInput = document.querySelector('input[name="role-selection"]:checked');
+    
+    if (!nameInput) {
+      alert('Please enter your name');
+      return;
+    }
+    
+    if (!roleInput) {
+      alert('Please select a role (Helper or Customer)');
+      return;
+    }
+    
+    // Store name and role in localStorage using shared.js functions
+    setUserName(nameInput);
+    setUserRole(roleInput.value);
+    
+    // Send data to server to save in a file
+    fetch('save_user.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: nameInput,
+        role: roleInput.value
+      })
+    }).catch(err => console.log('File save attempted'));
+    
+    // Redirect based on role
+    if (roleInput.value === 'Customer') {
+      window.location.href = 'costumerdash.html';
+    } else if (roleInput.value === 'Helper') {
+      window.location.href = 'helpwel.html';
+    }
+  });
+</script>
 </body></html>
