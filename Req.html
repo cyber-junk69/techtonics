@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customer Job Request</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="shared.js"></script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+              "neutral-100": "#f8fafc",
+              "neutral-200": "#eef2f6",
+              "neutral-300": "#e2e8f0",
+              "neutral-400": "#cbd5e1",
+              "neutral-500": "#94a3b8",
+              "neutral-600": "#64748b",
+              "neutral-700": "#475569",
+              "neutral-800": "#334155",
+              "neutral-900": "#1e293b",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-neutral-800 dark:text-neutral-200">
+<div class="relative flex h-auto min-h-screen w-full">
+<aside class="flex h-screen w-64 flex-col border-r border-neutral-300/70 dark:border-neutral-700/50 bg-white dark:bg-neutral-900/50 sticky top-0">
+<div class="flex h-16 shrink-0 items-center px-6">
+<h1 class="text-xl font-bold text-neutral-900 dark:text-white">HomeHelper</h1>
+</div>
+<div class="flex flex-1 flex-col justify-between p-4">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-4 px-4 py-2 rounded-lg hover:bg-neutral-200/60 dark:hover:bg-neutral-800/60 cursor-pointer" onclick="window.location.href='costumerdash.html'">
+<span class="material-symbols-outlined text-neutral-600 dark:text-neutral-400">dashboard</span>
+<p class="text-neutral-700 dark:text-neutral-300 text-sm font-medium">Dashboard</p>
+</div>
+<div class="flex items-center gap-4 px-4 py-2 rounded-lg bg-primary/10 dark:bg-primary/20">
+<span class="material-symbols-outlined text-primary">add_circle</span>
+<p class="text-primary text-sm font-medium">New Request</p>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="border-t border-neutral-300/70 dark:border-neutral-700/50"></div>
+<div class="flex gap-3 items-center px-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD9mktp2WDwCMM9zPumnlpWzvREJbUL-0EDNgj3qEyjnPaM4cxNyH3F_pbDl8kn28HzDJ0ZYpkT_uM9pNTYGhOLNqZrh4hl6GHRYlizLjZD4QU9SMkbVdvJUqTOfmqml6LPXGNu7uJlIcf7NsNxGtU9SA0sk6gk8GW4dkhI65Bk6bR4bec2TmCqWU4mNw-Q3cFUAcp4DSVLnDzbAd9AwApdCoaoNO2P-MvzeN0h5Okh2JHdPFqBhPaKmXtoRjzDLjRlegvU_1_HFSQ");'></div>
+<div class="flex flex-col">
+  <script>
+    // Display username from shared.js (localStorage)
+    const displayUserName = (typeof userName !== 'undefined' && userName) ? userName : (typeof getUserName === 'function' ? getUserName() : 'User');
+    document.addEventListener('DOMContentLoaded', function () {
+      const el = document.getElementById('userName');
+      if (el) el.textContent = displayUserName;
+    });
+  </script>
+  <h1 id="userName" class="text-neutral-900 dark:text-white text-sm font-medium leading-normal"></h1>
+<p class="text-neutral-500 dark:text-neutral-400 text-xs font-normal leading-normal">customer@email.com</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 p-8">
+<div class="w-full max-w-3xl mx-auto">
+<div class="mb-8">
+<h2 class="text-neutral-900 dark:text-white text-3xl font-bold leading-tight tracking-tight">Submit a New Service Request</h2>
+<p class="text-neutral-500 dark:text-neutral-400 mt-1">Fill out the details below to find the right helper for your job.</p>
+</div>
+<div class="bg-white dark:bg-neutral-900/50 rounded-xl border border-neutral-300/70 dark:border-neutral-700/50 shadow-sm">
+<div class="p-6 space-y-6">
+<div>
+<label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1.5" for="job-title">Job Title</label>
+<input class="form-input w-full rounded-lg bg-white dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700 focus:ring-primary/50 focus:border-primary placeholder:text-neutral-400 dark:placeholder:text-neutral-500 text-sm" id="job-title" placeholder="e.g., Fix leaky kitchen sink" type="text"/>
+</div>
+<script>
+  // Wait for DOM, then wire validation + submit behavior
+  document.addEventListener('DOMContentLoaded', function () {
+    const submitBtn = document.getElementById('submitRequestBtn');
+    const fields = {
+      jobTitle: document.getElementById('job-title'),
+      jobType: document.getElementById('job-type'),
+      description: document.getElementById('description'),
+      date: document.getElementById('date'),
+      time: document.getElementById('time'),
+      location: document.getElementById('location'),
+      contact: document.getElementById('contact')
+    };
+
+    function getStoredName() {
+      return (typeof userName !== 'undefined' && userName) ? userName : (typeof getUserName === 'function' ? getUserName() : '');
+    }
+
+    function formIsValid() {
+      // require name and all fields (cost is optional)
+      const name = getStoredName();
+      if (!name) return false;
+      if (!fields.jobTitle.value.trim()) return false;
+      if (!fields.jobType.value.trim()) return false;
+      if (!fields.description.value.trim()) return false;
+      if (!fields.date.value) return false;
+      if (!fields.time.value) return false;
+      if (!fields.location.value.trim()) return false;
+      if (!fields.contact.value.trim()) return false;
+      return true;
+    }
+
+    function validateForm() {
+      const valid = formIsValid();
+      if (valid) {
+        submitBtn.removeAttribute('disabled');
+        submitBtn.setAttribute('aria-disabled', 'false');
+        submitBtn.classList.remove('opacity-50');
+      } else {
+        submitBtn.setAttribute('disabled', '');
+        submitBtn.setAttribute('aria-disabled', 'true');
+      }
+    }
+
+    // Attach listeners to form fields to validate in real time
+    Object.values(fields).forEach(el => {
+      if (!el) return;
+      el.addEventListener('input', validateForm);
+      el.addEventListener('change', validateForm);
+    });
+
+    // Also validate when shared userName becomes available (in case set elsewhere)
+    window.addEventListener('storage', validateForm);
+
+    // initial validation
+    validateForm();
+
+    // Submit handler
+    submitBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (!formIsValid()) {
+        alert('Please complete all required fields (including your name).');
+        return;
+      }
+
+      // Collect values
+      const name = getStoredName();
+      const payload = {
+        name: name || '',
+        jobTitle: fields.jobTitle.value.trim(),
+        jobType: fields.jobType.value.trim(),
+        description: fields.description.value.trim(),
+        preferredDate: fields.date.value,
+        preferredTime: fields.time.value,
+        location: fields.location.value.trim(),
+        contact: (fields.contact && fields.contact.value) ? fields.contact.value.trim() : '',
+        cost: (document.getElementById('cost') || { value: '' }).value.trim()
+      };
+
+      // Generate a serial request ID
+      let requestCounter = parseInt(localStorage.getItem('requestCounter') || '12347');
+      requestCounter++;
+      localStorage.setItem('requestCounter', requestCounter.toString());
+      const requestId = requestCounter.toString();
+      const today = new Date().toISOString().split('T')[0];
+
+      // Create complete request object
+      const newRequest = {
+        jobTitle: payload.jobTitle,
+        requestId: requestId,
+        date: today,
+        name: payload.name,
+        jobType: payload.jobType,
+        description: payload.description,
+        preferredDate: payload.preferredDate,
+        preferredTime: payload.preferredTime,
+        location: payload.location,
+        contact: payload.contact,
+        cost: payload.cost,
+        status: 'pending',
+        submittedAt: new Date().toISOString()
+      };
+
+      // Get existing requests from localStorage
+      let allRequests = [];
+      try {
+        const stored = localStorage.getItem('allRequests');
+        if (stored) {
+          allRequests = JSON.parse(stored);
+        }
+      } catch (e) {
+        console.warn('Failed to parse existing requests', e);
+      }
+
+      // Add new request
+      allRequests.push(newRequest);
+
+      // Sort by preferredDate and preferredTime (descending - newest first)
+      allRequests.sort((a, b) => {
+        const dateA = new Date(a.preferredDate + ' ' + a.preferredTime);
+        const dateB = new Date(b.preferredDate + ' ' + b.preferredTime);
+        return dateB - dateA;
+      });
+
+      // Save sorted requests back to localStorage (all requests)
+      localStorage.setItem('allRequests', JSON.stringify(allRequests));
+
+      // Also save to job-type-specific storage
+      const jobType = payload.jobType.toLowerCase();
+      let storageKey = 'allRequests'; // default
+      
+      if (jobType.includes('electrical')) {
+        storageKey = 'Request_Electrician';
+      } else if (jobType.includes('cleaning')) {
+        storageKey = 'Request_Cleaner';
+      } else if (jobType.includes('plumbing')) {
+        storageKey = 'Request_Plumber';
+      }
+
+      // Get existing type-specific requests
+      let typeRequests = [];
+      try {
+        const stored = localStorage.getItem(storageKey);
+        if (stored) {
+          typeRequests = JSON.parse(stored);
+        }
+      } catch (e) {
+        console.warn('Failed to parse type-specific requests', e);
+      }
+
+      // Add new request to type-specific array
+      typeRequests.push(newRequest);
+
+      // Sort by preferredDate and preferredTime (descending - newest first)
+      typeRequests.sort((a, b) => {
+        const dateA = new Date(a.preferredDate + ' ' + a.preferredTime);
+        const dateB = new Date(b.preferredDate + ' ' + b.preferredTime);
+        return dateB - dateA;
+      });
+
+      // Save sorted type-specific requests
+      localStorage.setItem(storageKey, JSON.stringify(typeRequests));
+
+      // Also store new request for dashboard to pick up
+      localStorage.setItem('newRequestToAdd', JSON.stringify(newRequest));
+
+      // Attempt to save on server (best-effort) then redirect
+      fetch('save_request.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(err => console.warn('save_request failed', err))
+        .finally(() => {
+          // Redirect user to customer dashboard
+          window.location.href = 'costumerdash.html';
+        });
+    });
+  });
+</script>
+<div>
+<label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1.5" for="job-type">Job Type</label>
+<select class="form-select w-full rounded-lg bg-white dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700 focus:ring-primary/50 focus:border-primary text-sm" id="job-type">
+<option>Plumbing</option>
+<option>House Cleaning</option>
+<option>Electrical</option>
+
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1.5" for="description">Detailed Description</label>
+<textarea class="form-textarea w-full rounded-lg bg-white dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700 focus:ring-primary/50 focus:border-primary placeholder:text-neutral-400 dark:placeholder:text-neutral-500 text-sm" id="description" placeholder="Describe the job in as much detail as possible..." rows="5"></textarea>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1.5" for="date">Preferred Date</label>
+<input class="form-input w-full rounded-lg bg-white dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700 focus:ring-primary/50 focus:border-primary text-sm" id="date" type="date"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1.5" for="time">Preferred Time</label>
+<input class="form-input w-full rounded-lg bg-white dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700 focus:ring-primary/50 focus:border-primary text-sm" id="time" type="time"/>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1.5" for="location">Service Location</label>
+<input class="form-input w-full rounded-lg bg-white dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700 focus:ring-primary/50 focus:border-primary placeholder:text-neutral-400 dark:placeholder:text-neutral-500 text-sm" id="location" placeholder="Enter your full address" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1.5" for="contact">Contact No.</label>
+<input class="form-input w-full rounded-lg bg-white dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700 focus:ring-primary/50 focus:border-primary placeholder:text-neutral-400 dark:placeholder:text-neutral-500 text-sm" id="contact" placeholder="e.g., +9779812345678" type="tel"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1.5" for="cost">Preferred Cost (Optional)</label>
+<div class="relative">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+<span class="text-neutral-500 sm:text-sm">$</span>
+</div>
+<input class="form-input w-full rounded-lg bg-white dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700 focus:ring-primary/50 focus:border-primary placeholder:text-neutral-400 dark:placeholder:text-neutral-500 text-sm pl-7" id="cost" placeholder="e.g., 150" type="text"/>
+</div>
+</div>
+</div>
+<div class="bg-neutral-50 dark:bg-neutral-800/50 px-6 py-4 border-t border-neutral-300/70 dark:border-neutral-700/50 flex justify-end rounded-b-xl">
+<button id="submitRequestBtn" disabled class="flex min-w-[84px] items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-5 bg-primary text-white text-sm font-bold shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50" aria-disabled="true">
+Submit Request
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+ 
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Initial Welcome</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="shared.js"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="font-display">
+<div class="relative flex min-h-screen w-full flex-col items-center justify-center bg-background-light p-4 dark:bg-background-dark">
+<div class="w-full max-w-md">
+<!-- Form Container -->
+<div class="flex flex-col items-center rounded-xl bg-white p-6 shadow-xl dark:bg-background-dark dark:border dark:border-slate-800 sm:p-8">
+<!-- Header Section -->
+<div class="text-center">
+<h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">Let's get started</h1>
+<p class="mt-2 text-base text-slate-600 dark:text-slate-400">Connecting Helpers with those who need them.</p>
+</div>
+<!-- Form Fields -->
+<div class="mt-8 flex w-full flex-col gap-6">
+<!-- Text Field for Name -->
+<div class="flex w-full flex-col">
+<label class="mb-2 text-sm font-medium text-slate-800 dark:text-slate-300" for="name-input">What should we call you?</label>
+<input class="form-input h-12 w-full rounded-lg border border-slate-300 bg-slate-50 p-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 dark:border-slate-700 dark:bg-slate-900/50 dark:text-slate-50 dark:placeholder:text-slate-500" id="name-input" placeholder="Enter your name" type="text" value=""/>
+</div>
+<!-- Role Selection -->
+<div class="flex w-full flex-col">
+<p class="mb-2 text-sm font-medium text-slate-800 dark:text-slate-300">I am a...</p>
+<!-- Segmented Buttons -->
+<div class="flex h-14 flex-1 items-center justify-center rounded-lg bg-slate-100 p-1 dark:bg-slate-800">
+<label class="flex h-full flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg px-2 text-sm font-medium text-slate-600 has-[:checked]:bg-white has-[:checked]:text-primary has-[:checked]:shadow-md dark:text-slate-400 dark:has-[:checked]:bg-slate-700 dark:has-[:checked]:text-white">
+<span class="material-symbols-outlined text-xl">construction</span>
+<span class="truncate">Helper</span>
+<input checked="" class="invisible h-0 w-0" name="role-selection" type="radio" value="Helper"/>
+</label>
+<label class="flex h-full flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg px-2 text-sm font-medium text-slate-600 has-[:checked]:bg-white has-[:checked]:text-primary has-[:checked]:shadow-md dark:text-slate-400 dark:has-[:checked]:bg-slate-700 dark:has-[:checked]:text-white">
+<span class="material-symbols-outlined text-xl">person</span>
+<span class="truncate">Customer</span>
+<input class="invisible h-0 w-0" name="role-selection" type="radio" value="Customer"/>
+</label>
+</div>
+</div>
+</div>
+<!-- Action Button -->
+<div class="mt-8 w-full">
+<button id="submitBtn" class="flex h-12 w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-5 text-base font-bold tracking-wide text-white transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 dark:focus:ring-offset-background-dark">
+<span class="truncate">Get Started</span>
+</button>
+</div>
+</div>
+<!-- Footer Link -->
+<div class="mt-6 text-center">
+<p class="text-xs text-slate-500 dark:text-slate-400">By continuing, you agree to our <a class="font-medium text-primary hover:underline" href="#">Terms of Service</a>.</p>
+</div>
+</div>
+</div>
+<script>
+  document.getElementById('submitBtn').addEventListener('click', function() {
+    const nameInput = document.getElementById('name-input').value.trim();
+    const roleInput = document.querySelector('input[name="role-selection"]:checked');
+    
+    if (!nameInput) {
+      alert('Please enter your name');
+      return;
+    }
+    
+    if (!roleInput) {
+      alert('Please select a role (Helper or Customer)');
+      return;
+    }
+    
+    // Store name and role in localStorage using shared.js functions
+    setUserName(nameInput);
+    setUserRole(roleInput.value);
+    
+    // Send data to server to save in a file
+    fetch('save_user.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: nameInput,
+        role: roleInput.value
+      })
+    }).catch(err => console.log('File save attempted'));
+    
+    // Redirect based on role
+    if (roleInput.value === 'Customer') {
+      window.location.href = 'costumerdash.html';
+    } else if (roleInput.value === 'Helper') {
+      window.location.href = 'helpwel.html';
+    }
+  });
+</script>
+</body></html>
