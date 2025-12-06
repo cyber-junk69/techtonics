@@ -90,28 +90,20 @@
 </button>
 </div>
 <div class="flex flex-col md:flex-row gap-4 mb-6">
-<div class="flex-1">
-<label class="flex flex-col h-10 w-full">
-<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-white dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 focus-within:ring-2 focus-within:ring-primary/50">
-<div class="text-neutral-500 dark:text-neutral-400 flex items-center justify-center pl-3">
-<span class="material-symbols-outlined">search</span>
-</div>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-neutral-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-neutral-500 dark:placeholder:text-neutral-400 px-2 text-sm font-normal" placeholder="Search by service or request ID..." value=""/>
-</div>
-</label>
-</div>
-<div class="flex gap-2 items-center">
-<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary/10 dark:bg-primary/20 px-3 text-primary">
-<p class="text-sm font-medium">All</p>
+<!-- Search removed per request -->
+<div class="flex-1"></div>
+<div class="flex gap-4 items-center justify-center w-full my-4">
+<button data-filter="all" class="filter-btn flex min-w-[120px] h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary/10 dark:bg-primary/20 px-6 text-base font-semibold">
+All
 </button>
-<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-neutral-800 px-3 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-700/50">
-<p class="text-neutral-700 dark:text-neutral-300 text-sm font-medium">Pending</p>
+<button data-filter="pending" class="filter-btn flex min-w-[120px] h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-neutral-800 px-6 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-700/50 text-base font-semibold">
+Pending
 </button>
-<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-neutral-800 px-3 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-700/50">
-<p class="text-neutral-700 dark:text-neutral-300 text-sm font-medium">Assigned</p>
+<button data-filter="assigned" class="filter-btn flex min-w-[120px] h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-neutral-800 px-6 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-700/50 text-base font-semibold">
+Assigned
 </button>
-<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-neutral-800 px-3 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-700/50">
-<p class="text-neutral-700 dark:text-neutral-300 text-sm font-medium">Completed</p>
+<button data-filter="completed" class="filter-btn flex min-w-[120px] h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-neutral-800 px-6 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-700/50 text-base font-semibold">
+Completed
 </button>
 </div>
 </div>
@@ -127,7 +119,7 @@
 </tr>
 </thead>
 <tbody class="divide-y divide-neutral-200 dark:divide-neutral-800">
-<tr class="hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40">
+<tr data-status="pending" class="hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40">
 <td class="px-6 py-4 whitespace-nowrap text-neutral-800 dark:text-neutral-200 font-medium">Plumbing Repair</td>
 <td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">#REQ-12345</td>
 <td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">Dec 6, 2025</td>
@@ -135,7 +127,7 @@
 <span class="inline-flex items-center rounded-full bg-orange-100 dark:bg-orange-900/50 px-2.5 py-0.5 text-xs font-medium text-orange-800 dark:text-orange-300">Pending</span>
 </td>
 </tr>
-<tr class="hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40">
+<tr data-status="completed" class="hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40">
 <td class="px-6 py-4 whitespace-nowrap text-neutral-800 dark:text-neutral-200 font-medium">House Cleaning</td>
 <td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">#REQ-12346</td>
 <td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">Dec 5, 2025</td>
@@ -143,7 +135,7 @@
 <span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/50 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-300">Completed</span>
 </td>
 </tr>
-<tr class="hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40">
+<tr data-status="assigned" class="hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40">
 <td class="px-6 py-4 whitespace-nowrap text-neutral-800 dark:text-neutral-200 font-medium">Electrical Wiring</td>
 <td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">#REQ-12347</td>
 <td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">Dec 4, 2025</td>
@@ -186,17 +178,6 @@
 </tbody>
 </table>
 </div>
-<div class="flex items-center justify-between border-t border-neutral-200 dark:border-neutral-800 px-6 py-3">
-<button class="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-50" disabled="">
-<span class="material-symbols-outlined !text-base">arrow_back</span>
-                        Previous
-                    </button>
-<div class="text-sm text-neutral-500 dark:text-neutral-400">Page 1 of 10</div>
-<button class="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
-                        Next
-                        <span class="material-symbols-outlined !text-base">arrow_forward</span>
-</button>
-</div>
 </div>
 </div>
 </main>
@@ -229,7 +210,8 @@ function fillNewRequest() {
           statusCell.innerHTML = '<span class="inline-flex items-center rounded-full bg-orange-100 dark:bg-orange-900/50 px-2.5 py-0.5 text-xs font-medium text-orange-800 dark:text-orange-300">Pending</span>';
         }
         
-        // Remove the class so it's no longer treated as empty
+        // Set data-status so filtering works and remove the empty marker
+        firstEmpty.setAttribute('data-status', 'pending');
         firstEmpty.classList.remove('empty-request-row');
       }
       
@@ -241,7 +223,43 @@ function fillNewRequest() {
   }
 }
 
-// Run on page load
-document.addEventListener('DOMContentLoaded', fillNewRequest);
+// Apply a filter to show rows matching a status
+function applyFilter(filter) {
+  const tbody = document.querySelector('tbody');
+  if (!tbody) return;
+  const rows = tbody.querySelectorAll('tr');
+  rows.forEach(row => {
+    const status = (row.getAttribute('data-status') || '').toLowerCase();
+    if (filter === 'all') {
+      row.style.display = '';
+    } else {
+      if (status === filter) row.style.display = '';
+      else row.style.display = 'none';
+    }
+  });
+
+  // update active button styling
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    if (btn.dataset.filter === filter) {
+      btn.classList.remove('bg-white','dark:bg-neutral-800','border','border-neutral-300','dark:border-neutral-700');
+      btn.classList.add('bg-primary/10','dark:bg-primary/20','text-primary');
+    } else {
+      btn.classList.remove('bg-primary/10','dark:bg-primary/20','text-primary');
+      btn.classList.add('bg-white','dark:bg-neutral-800','border','border-neutral-300','dark:border-neutral-700');
+    }
+  });
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+  fillNewRequest();
+  applyFilter('all');
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const f = this.dataset.filter || 'all';
+      applyFilter(f);
+    });
+  });
+});
 </script>
 </body></html>
