@@ -31,8 +31,49 @@
       }
     </style>
 <script>
+      // Populate plumbing jobs from localStorage
+      function loadPlumbingJobs() {
+        const container = document.querySelector('.available-jobs-container');
+        const allRequests = JSON.parse(localStorage.getItem('allRequests') || '[]');
+        const plumbingJobs = allRequests.filter(req => req.jobType && req.jobType.toLowerCase().includes('plumbing'));
+        
+        if (plumbingJobs.length > 0) {
+          container.innerHTML = '';
+          plumbingJobs.forEach(job => {
+            const jobCard = document.createElement('div');
+            jobCard.className = 'bg-slate-50 dark:bg-slate-900 rounded-xl border border-[#cfdbe7] dark:border-gray-700 p-5 flex flex-col gap-4';
+            jobCard.innerHTML = `
+              <div class="flex justify-between items-start">
+                <div class="flex flex-col">
+                  <p class="text-sm text-[#4c739a] dark:text-slate-400">Plumbing</p>
+                  <h3 class="text-lg font-bold text-[#0d141b] dark:text-white">${job.jobTitle}</h3>
+                </div>
+                <p class="text-lg font-bold text-green-600 dark:text-green-400">${job.cost || 'N/A'}</p>
+              </div>
+              <div class="text-sm text-[#4c739a] dark:text-slate-400 flex flex-col gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-base">person</span>
+                  <span>${job.name}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-base">location_on</span>
+                  <span>${job.location}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-base">calendar_today</span>
+                  <span>${job.preferredDate}, ${job.preferredTime}</span>
+                </div>
+              </div>
+              <button class="w-full bg-primary text-white font-bold py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors">Accept Job</button>
+            `;
+            container.appendChild(jobCard);
+          });
+        }
+      }
+      
       // Handle Accept Job button clicks
       document.addEventListener('DOMContentLoaded', function () {
+        loadPlumbingJobs();
         const acceptButtons = document.querySelectorAll('.available-jobs-container button:not(.cursor-not-allowed)');
         const ongoingContainer = document.getElementById('ongoing-jobs-container');
         
