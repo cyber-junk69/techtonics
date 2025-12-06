@@ -53,7 +53,7 @@
 </div>
 <div class="flex flex-1 flex-col justify-between p-4">
 <div class="flex flex-col gap-2">
-<div class="flex items-center gap-4 px-4 py-2 rounded-lg hover:bg-neutral-200/60 dark:hover:bg-neutral-800/60 cursor-pointer">
+<div class="flex items-center gap-4 px-4 py-2 rounded-lg hover:bg-neutral-200/60 dark:hover:bg-neutral-800/60 cursor-pointer" onclick="window.location.href='costumerdash.html'">
 <span class="material-symbols-outlined text-neutral-600 dark:text-neutral-400">dashboard</span>
 <p class="text-neutral-700 dark:text-neutral-300 text-sm font-medium">Dashboard</p>
 </div>
@@ -99,50 +99,92 @@
 <input class="form-input w-full rounded-lg bg-white dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700 focus:ring-primary/50 focus:border-primary placeholder:text-neutral-400 dark:placeholder:text-neutral-500 text-sm" id="job-title" placeholder="e.g., Fix leaky kitchen sink" type="text"/>
 </div>
 <script>
-  // Submit Request: collect fields, save to server file, then redirect to customer dashboard
-  document.getElementById('submitRequestBtn').addEventListener('click', function (e) {
-    e.preventDefault();
-
-    // Collect values
-    const name = (typeof userName !== 'undefined' && userName) ? userName : getUserName();
-    const jobTitle = document.getElementById('job-title').value.trim();
-    const jobType = document.getElementById('job-type').value.trim();
-    const description = document.getElementById('description').value.trim();
-    const date = document.getElementById('date').value;
-    const time = document.getElementById('time').value;
-    const location = document.getElementById('location').value.trim();
-    const cost = document.getElementById('cost').value.trim();
-
-    // Basic validation
-    if (!jobTitle) { alert('Please enter a job title'); return; }
-    if (!jobType) { alert('Please select a job type'); return; }
-    if (!description) { alert('Please enter a detailed description'); return; }
-    if (!date) { alert('Please choose a preferred date'); return; }
-    if (!time) { alert('Please choose a preferred time'); return; }
-    if (!location) { alert('Please enter a service location'); return; }
-
-    // Prepare payload
-    const payload = {
-      name: name || '',
-      jobTitle: jobTitle,
-      jobType: jobType,
-      description: description,
-      preferredDate: date,
-      preferredTime: time,
-      location: location,
-      cost: cost || ''
+  // Wait for DOM, then wire validation + submit behavior
+  document.addEventListener('DOMContentLoaded', function () {
+    const submitBtn = document.getElementById('submitRequestBtn');
+    const fields = {
+      jobTitle: document.getElementById('job-title'),
+      jobType: document.getElementById('job-type'),
+      description: document.getElementById('description'),
+      date: document.getElementById('date'),
+      time: document.getElementById('time'),
+      location: document.getElementById('location')
     };
 
-    // Attempt to save on server (best-effort) then redirect
-    fetch('save_request.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    }).catch(err => console.warn('save_request failed', err))
-      .finally(() => {
-        // Redirect user to customer dashboard
-        window.location.href = 'costumerdash.html';
-      });
+    function getStoredName() {
+      return (typeof userName !== 'undefined' && userName) ? userName : (typeof getUserName === 'function' ? getUserName() : '');
+    }
+
+    function formIsValid() {
+      // require name and all fields (cost is optional)
+      const name = getStoredName();
+      if (!name) return false;
+      if (!fields.jobTitle.value.trim()) return false;
+      if (!fields.jobType.value.trim()) return false;
+      if (!fields.description.value.trim()) return false;
+      if (!fields.date.value) return false;
+      if (!fields.time.value) return false;
+      if (!fields.location.value.trim()) return false;
+      return true;
+    }
+
+    function validateForm() {
+      const valid = formIsValid();
+      if (valid) {
+        submitBtn.removeAttribute('disabled');
+        submitBtn.setAttribute('aria-disabled', 'false');
+        submitBtn.classList.remove('opacity-50');
+      } else {
+        submitBtn.setAttribute('disabled', '');
+        submitBtn.setAttribute('aria-disabled', 'true');
+      }
+    }
+
+    // Attach listeners to form fields to validate in real time
+    Object.values(fields).forEach(el => {
+      if (!el) return;
+      el.addEventListener('input', validateForm);
+      el.addEventListener('change', validateForm);
+    });
+
+    // Also validate when shared userName becomes available (in case set elsewhere)
+    window.addEventListener('storage', validateForm);
+
+    // initial validation
+    validateForm();
+
+    // Submit handler
+    submitBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (!formIsValid()) {
+        alert('Please complete all required fields (including your name).');
+        return;
+      }
+
+      // Collect values
+      const name = getStoredName();
+      const payload = {
+        name: name || '',
+        jobTitle: fields.jobTitle.value.trim(),
+        jobType: fields.jobType.value.trim(),
+        description: fields.description.value.trim(),
+        preferredDate: fields.date.value,
+        preferredTime: fields.time.value,
+        location: fields.location.value.trim(),
+        cost: (document.getElementById('cost') || { value: '' }).value.trim()
+      };
+
+      // Attempt to save on server (best-effort) then redirect
+      fetch('save_request.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(err => console.warn('save_request failed', err))
+        .finally(() => {
+          // Redirect user to customer dashboard
+          window.location.href = 'costumerdash.html';
+        });
+    });
   });
 </script>
 <div>
@@ -183,7 +225,7 @@
 </div>
 </div>
 <div class="bg-neutral-50 dark:bg-neutral-800/50 px-6 py-4 border-t border-neutral-300/70 dark:border-neutral-700/50 flex justify-end rounded-b-xl">
-<button id="submitRequestBtn" class="flex min-w-[84px] items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-5 bg-primary text-white text-sm font-bold shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50">
+<button id="submitRequestBtn" disabled class="flex min-w-[84px] items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-5 bg-primary text-white text-sm font-bold shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50" aria-disabled="true">
 Submit Request
 </button>
 </div>
