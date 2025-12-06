@@ -6,3 +6,9 @@
 <li>Profile & Skill Management: Job holders can showcase their skills, experience, and availability to attract more customers.</li>
 <li>Job Tracking Dashboard: Customers can track the status of their service request, and workers can manage their tasks.</li>
 <li>Flexible Service Categories: Supports a wide range of services—plumbing, cleaning, electrical.</li>
+<h2>Contribution</h2>
+<ol>
+<li>Samrat Dhungana: The user interface for this project was designed and developed by Samrat Dhungana, ensuring a clean, intuitive, and user-friendly experience for both customers and service providers.</li>
+<li>Shrayamsha Aryal:The process of integrating the UI and making all interface components fully functional was handled by Shrayamsha Aryal, ensuring smooth interaction, responsiveness, and proper linkage between the frontend and backend workflows.</li>
+<li>Dipshan Yonjan: All research, planning, and foundational analysis for this project were conducted by Dipshan Yonjan, ensuring the project had a clear direction, accurate information, and well-structured development goals.</li>
+</ol>
