@@ -96,7 +96,8 @@
       description: document.getElementById('description'),
       date: document.getElementById('date'),
       time: document.getElementById('time'),
-      location: document.getElementById('location')
+      location: document.getElementById('location'),
+      contact: document.getElementById('contact')
     };
 
     function getStoredName() {
@@ -113,6 +114,7 @@
       if (!fields.date.value) return false;
       if (!fields.time.value) return false;
       if (!fields.location.value.trim()) return false;
+      if (!fields.contact.value.trim()) return false;
       return true;
     }
 
@@ -159,6 +161,7 @@
         preferredDate: fields.date.value,
         preferredTime: fields.time.value,
         location: fields.location.value.trim(),
+        contact: (fields.contact && fields.contact.value) ? fields.contact.value.trim() : '',
         cost: (document.getElementById('cost') || { value: '' }).value.trim()
       };
 
@@ -216,6 +219,10 @@
 <div>
 <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1.5" for="location">Service Location</label>
 <input class="form-input w-full rounded-lg bg-white dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700 focus:ring-primary/50 focus:border-primary placeholder:text-neutral-400 dark:placeholder:text-neutral-500 text-sm" id="location" placeholder="Enter your full address" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1.5" for="contact">Contact No.</label>
+<input class="form-input w-full rounded-lg bg-white dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700 focus:ring-primary/50 focus:border-primary placeholder:text-neutral-400 dark:placeholder:text-neutral-500 text-sm" id="contact" placeholder="e.g., +9779812345678" type="tel"/>
 </div>
 <div>
 <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1.5" for="cost">Preferred Cost (Optional)</label>
