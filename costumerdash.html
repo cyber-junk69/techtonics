@@ -61,10 +61,6 @@
 <span class="material-symbols-outlined text-neutral-600 dark:text-neutral-400">add_circle</span>
 <p class="text-neutral-700 dark:text-neutral-300 text-sm font-medium">New Request</p>
 </div>
-<div class="flex items-center gap-4 px-4 py-2 rounded-lg hover:bg-neutral-200/60 dark:hover:bg-neutral-800/60 cursor-pointer">
-<span class="material-symbols-outlined text-neutral-600 dark:text-neutral-400">person</span>
-<p class="text-neutral-700 dark:text-neutral-300 text-sm font-medium">My Profile</p>
-</div>
 </div>
 <div class="flex flex-col gap-4">
 <div class="border-t border-neutral-300/70 dark:border-neutral-700/50"></div>
@@ -80,14 +76,6 @@
 
 
 </div>
-</div>
-<div class="flex items-center gap-4 px-4 py-2 rounded-lg hover:bg-neutral-200/60 dark:hover:bg-neutral-800/60 cursor-pointer">
-<span class="material-symbols-outlined text-neutral-600 dark:text-neutral-400">settings</span>
-<p class="text-neutral-700 dark:text-neutral-300 text-sm font-medium">Settings</p>
-</div>
-<div class="flex items-center gap-4 px-4 py-2 rounded-lg hover:bg-neutral-200/60 dark:hover:bg-neutral-800/60 cursor-pointer">
-<span class="material-symbols-outlined text-neutral-600 dark:text-neutral-400">logout</span>
-<p class="text-neutral-700 dark:text-neutral-300 text-sm font-medium">Log out</p>
 </div>
 </div>
 </div>
@@ -136,63 +124,63 @@
 <th class="px-6 py-4 text-left font-medium text-neutral-600 dark:text-neutral-400">Request ID</th>
 <th class="px-6 py-4 text-left font-medium text-neutral-600 dark:text-neutral-400">Date Submitted</th>
 <th class="px-6 py-4 text-left font-medium text-neutral-600 dark:text-neutral-400">Status</th>
-<th class="px-6 py-4 text-right font-medium text-neutral-600 dark:text-neutral-400">Actions</th>
 </tr>
 </thead>
 <tbody class="divide-y divide-neutral-200 dark:divide-neutral-800">
 <tr class="hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40">
 <td class="px-6 py-4 whitespace-nowrap text-neutral-800 dark:text-neutral-200 font-medium">Plumbing Repair</td>
 <td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">#REQ-12345</td>
-<td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">Oct 26, 2023</td>
+<td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">Dec 6, 2025</td>
 <td class="px-6 py-4 whitespace-nowrap">
 <span class="inline-flex items-center rounded-full bg-orange-100 dark:bg-orange-900/50 px-2.5 py-0.5 text-xs font-medium text-orange-800 dark:text-orange-300">Pending</span>
-</td>
-<td class="px-6 py-4 whitespace-nowrap text-right">
-<button class="font-medium text-primary hover:underline">View Details</button>
 </td>
 </tr>
 <tr class="hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40">
 <td class="px-6 py-4 whitespace-nowrap text-neutral-800 dark:text-neutral-200 font-medium">House Cleaning</td>
 <td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">#REQ-12346</td>
-<td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">Oct 25, 2023</td>
+<td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">Dec 5, 2025</td>
 <td class="px-6 py-4 whitespace-nowrap">
 <span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/50 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-300">Completed</span>
-</td>
-<td class="px-6 py-4 whitespace-nowrap text-right">
-<button class="font-medium text-primary hover:underline">View Details</button>
 </td>
 </tr>
 <tr class="hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40">
 <td class="px-6 py-4 whitespace-nowrap text-neutral-800 dark:text-neutral-200 font-medium">Electrical Wiring</td>
 <td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">#REQ-12347</td>
-<td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">Oct 24, 2023</td>
+<td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">Dec 4, 2025</td>
 <td class="px-6 py-4 whitespace-nowrap">
 <span class="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900/50 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-300">Assigned</span>
 </td>
-<td class="px-6 py-4 whitespace-nowrap text-right">
-<button class="font-medium text-primary hover:underline">View Details</button>
+</tr>
+<tr class="hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40 empty-request-row">
+<td class="px-6 py-4 whitespace-nowrap text-neutral-800 dark:text-neutral-200 font-medium service-cell">-</td>
+<td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400 request-id-cell">-</td>
+<td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400 date-cell">-</td>
+<td class="px-6 py-4 whitespace-nowrap status-cell">
+<span class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-900/50 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:text-gray-300">-</span>
 </td>
 </tr>
-<tr class="hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40">
-<td class="px-6 py-4 whitespace-nowrap text-neutral-800 dark:text-neutral-200 font-medium">Gardening Services</td>
-<td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">#REQ-12348</td>
-<td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">Oct 23, 2023</td>
-<td class="px-6 py-4 whitespace-nowrap">
-<span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/50 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-300">Completed</span>
-</td>
-<td class="px-6 py-4 whitespace-nowrap text-right">
-<button class="font-medium text-primary hover:underline">View Details</button>
+<tr class="hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40 empty-request-row">
+<td class="px-6 py-4 whitespace-nowrap text-neutral-800 dark:text-neutral-200 font-medium service-cell">-</td>
+<td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400 request-id-cell">-</td>
+<td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400 date-cell">-</td>
+<td class="px-6 py-4 whitespace-nowrap status-cell">
+<span class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-900/50 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:text-gray-300">-</span>
 </td>
 </tr>
-<tr class="hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40">
-<td class="px-6 py-4 whitespace-nowrap text-neutral-800 dark:text-neutral-200 font-medium">Appliance Installation</td>
-<td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">#REQ-12349</td>
-<td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400">Oct 22, 2023</td>
-<td class="px-6 py-4 whitespace-nowrap">
-<span class="inline-flex items-center rounded-full bg-red-100 dark:bg-red-900/50 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:text-red-300">Canceled</span>
+<tr class="hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40 empty-request-row">
+<td class="px-6 py-4 whitespace-nowrap text-neutral-800 dark:text-neutral-200 font-medium service-cell">-</td>
+<td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400 request-id-cell">-</td>
+<td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400 date-cell">-</td>
+<td class="px-6 py-4 whitespace-nowrap status-cell">
+<span class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-900/50 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:text-gray-300">-</span>
 </td>
-<td class="px-6 py-4 whitespace-nowrap text-right">
-<button class="font-medium text-primary hover:underline">View Details</button>
+</tr>
+<tr class="hover:bg-neutral-100/50 dark:hover:bg-neutral-800/40 empty-request-row">
+<td class="px-6 py-4 whitespace-nowrap text-neutral-800 dark:text-neutral-200 font-medium service-cell">-</td>
+<td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400 request-id-cell">-</td>
+<td class="px-6 py-4 whitespace-nowrap text-neutral-500 dark:text-neutral-400 date-cell">-</td>
+<td class="px-6 py-4 whitespace-nowrap status-cell">
+<span class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-900/50 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:text-gray-300">-</span>
 </td>
 </tr>
 </tbody>
@@ -213,4 +201,47 @@
 </div>
 </main>
 </div>
+
+<script>
+// Check if there's a new request to add and fill the first empty row
+function fillNewRequest() {
+  const newRequestData = localStorage.getItem('newRequestToAdd');
+  
+  if (newRequestData) {
+    try {
+      const newRequest = JSON.parse(newRequestData);
+      
+      // Find the first empty row
+      const emptyRows = document.querySelectorAll('.empty-request-row');
+      if (emptyRows.length > 0) {
+        const firstEmpty = emptyRows[0];
+        
+        // Fill in the data
+        const serviceCell = firstEmpty.querySelector('.service-cell');
+        const requestIdCell = firstEmpty.querySelector('.request-id-cell');
+        const dateCell = firstEmpty.querySelector('.date-cell');
+        const statusCell = firstEmpty.querySelector('.status-cell');
+        
+        if (serviceCell) serviceCell.textContent = newRequest.jobTitle;
+        if (requestIdCell) requestIdCell.textContent = '#REQ-' + newRequest.requestId;
+        if (dateCell) dateCell.textContent = newRequest.date;
+        if (statusCell) {
+          statusCell.innerHTML = '<span class="inline-flex items-center rounded-full bg-orange-100 dark:bg-orange-900/50 px-2.5 py-0.5 text-xs font-medium text-orange-800 dark:text-orange-300">Pending</span>';
+        }
+        
+        // Remove the class so it's no longer treated as empty
+        firstEmpty.classList.remove('empty-request-row');
+      }
+      
+      // Clear the localStorage
+      localStorage.removeItem('newRequestToAdd');
+    } catch (error) {
+      console.error('Error filling new request:', error);
+    }
+  }
+}
+
+// Run on page load
+document.addEventListener('DOMContentLoaded', fillNewRequest);
+</script>
 </body></html>

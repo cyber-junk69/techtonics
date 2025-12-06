@@ -174,6 +174,21 @@
         cost: (document.getElementById('cost') || { value: '' }).value.trim()
       };
 
+      // Generate a serial request ID
+      let requestCounter = parseInt(localStorage.getItem('requestCounter') || '12347');
+      requestCounter++;
+      localStorage.setItem('requestCounter', requestCounter.toString());
+      const requestId = requestCounter.toString();
+      const today = new Date().toISOString().split('T')[0];
+
+      // Store new request in localStorage for dashboard to pick up
+      const newRequest = {
+        jobTitle: payload.jobTitle,
+        requestId: requestId,
+        date: today
+      };
+      localStorage.setItem('newRequestToAdd', JSON.stringify(newRequest));
+
       // Attempt to save on server (best-effort) then redirect
       fetch('save_request.php', {
         method: 'POST',
