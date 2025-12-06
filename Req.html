@@ -67,7 +67,15 @@
 <div class="flex gap-3 items-center px-4">
 <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD9mktp2WDwCMM9zPumnlpWzvREJbUL-0EDNgj3qEyjnPaM4cxNyH3F_pbDl8kn28HzDJ0ZYpkT_uM9pNTYGhOLNqZrh4hl6GHRYlizLjZD4QU9SMkbVdvJUqTOfmqml6LPXGNu7uJlIcf7NsNxGtU9SA0sk6gk8GW4dkhI65Bk6bR4bec2TmCqWU4mNw-Q3cFUAcp4DSVLnDzbAd9AwApdCoaoNO2P-MvzeN0h5Okh2JHdPFqBhPaKmXtoRjzDLjRlegvU_1_HFSQ");'></div>
 <div class="flex flex-col">
-<h1 class="text-neutral-900 dark:text-white text-sm font-medium leading-normal">Eleanor Pena</h1>
+  <script>
+    // Display username from shared.js (localStorage)
+    const displayUserName = (typeof userName !== 'undefined' && userName) ? userName : (typeof getUserName === 'function' ? getUserName() : 'User');
+    document.addEventListener('DOMContentLoaded', function () {
+      const el = document.getElementById('userName');
+      if (el) el.textContent = displayUserName;
+    });
+  </script>
+  <h1 id="userName" class="text-neutral-900 dark:text-white text-sm font-medium leading-normal"></h1>
 <p class="text-neutral-500 dark:text-neutral-400 text-xs font-normal leading-normal">customer@email.com</p>
 </div>
 </div>
@@ -172,12 +180,84 @@
       const requestId = requestCounter.toString();
       const today = new Date().toISOString().split('T')[0];
 
-      // Store new request in localStorage for dashboard to pick up
+      // Create complete request object
       const newRequest = {
         jobTitle: payload.jobTitle,
         requestId: requestId,
-        date: today
+        date: today,
+        name: payload.name,
+        jobType: payload.jobType,
+        description: payload.description,
+        preferredDate: payload.preferredDate,
+        preferredTime: payload.preferredTime,
+        location: payload.location,
+        contact: payload.contact,
+        cost: payload.cost,
+        status: 'pending',
+        submittedAt: new Date().toISOString()
       };
+
+      // Get existing requests from localStorage
+      let allRequests = [];
+      try {
+        const stored = localStorage.getItem('allRequests');
+        if (stored) {
+          allRequests = JSON.parse(stored);
+        }
+      } catch (e) {
+        console.warn('Failed to parse existing requests', e);
+      }
+
+      // Add new request
+      allRequests.push(newRequest);
+
+      // Sort by preferredDate and preferredTime (descending - newest first)
+      allRequests.sort((a, b) => {
+        const dateA = new Date(a.preferredDate + ' ' + a.preferredTime);
+        const dateB = new Date(b.preferredDate + ' ' + b.preferredTime);
+        return dateB - dateA;
+      });
+
+      // Save sorted requests back to localStorage (all requests)
+      localStorage.setItem('allRequests', JSON.stringify(allRequests));
+
+      // Also save to job-type-specific storage
+      const jobType = payload.jobType.toLowerCase();
+      let storageKey = 'allRequests'; // default
+      
+      if (jobType.includes('electrical')) {
+        storageKey = 'Request_Electrician';
+      } else if (jobType.includes('cleaning')) {
+        storageKey = 'Request_Cleaner';
+      } else if (jobType.includes('plumbing')) {
+        storageKey = 'Request_Plumber';
+      }
+
+      // Get existing type-specific requests
+      let typeRequests = [];
+      try {
+        const stored = localStorage.getItem(storageKey);
+        if (stored) {
+          typeRequests = JSON.parse(stored);
+        }
+      } catch (e) {
+        console.warn('Failed to parse type-specific requests', e);
+      }
+
+      // Add new request to type-specific array
+      typeRequests.push(newRequest);
+
+      // Sort by preferredDate and preferredTime (descending - newest first)
+      typeRequests.sort((a, b) => {
+        const dateA = new Date(a.preferredDate + ' ' + a.preferredTime);
+        const dateB = new Date(b.preferredDate + ' ' + b.preferredTime);
+        return dateB - dateA;
+      });
+
+      // Save sorted type-specific requests
+      localStorage.setItem(storageKey, JSON.stringify(typeRequests));
+
+      // Also store new request for dashboard to pick up
       localStorage.setItem('newRequestToAdd', JSON.stringify(newRequest));
 
       // Attempt to save on server (best-effort) then redirect

@@ -63,25 +63,25 @@
 <div class="flex grow flex-col">
 <p class="text-slate-800 dark:text-slate-200 text-base font-medium leading-normal">Electrician</p>
 </div>
-<input class="h-5 w-5 border-2 border-slate-300 dark:border-slate-600 bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background-light dark:focus:ring-offset-background-dark focus:ring-primary/50 checked:focus:border-primary" name="profession-selection" type="radio"/>
+<input value="electrician" class="h-5 w-5 border-2 border-slate-300 dark:border-slate-600 bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background-light dark:focus:ring-offset-background-dark focus:ring-primary/50 checked:focus:border-primary" name="profession-selection" type="radio"/>
 </label>
 <label class="flex items-center gap-4 rounded-xl border border-solid border-slate-300 dark:border-slate-700 p-4 cursor-pointer hover:border-primary dark:hover:border-primary transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary/10 has-[:checked]:ring-2 has-[:checked]:ring-primary/20">
 <span class="material-symbols-outlined text-slate-500 dark:text-slate-400">plumbing</span>
 <div class="flex grow flex-col">
 <p class="text-slate-800 dark:text-slate-200 text-base font-medium leading-normal">Plumber</p>
 </div>
-<input class="h-5 w-5 border-2 border-slate-300 dark:border-slate-600 bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background-light dark:focus:ring-offset-background-dark focus:ring-primary/50 checked:focus:border-primary" name="profession-selection" type="radio"/>
+<input value="plumber" class="h-5 w-5 border-2 border-slate-300 dark:border-slate-600 bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background-light dark:focus:ring-offset-background-dark focus:ring-primary/50 checked:focus:border-primary" name="profession-selection" type="radio"/>
 </label>
 <label class="flex items-center gap-4 rounded-xl border border-solid border-slate-300 dark:border-slate-700 p-4 cursor-pointer hover:border-primary dark:hover:border-primary transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary/10 has-[:checked]:ring-2 has-[:checked]:ring-primary/20">
 <span class="material-symbols-outlined text-slate-500 dark:text-slate-400">cleaning_services</span>
 <div class="flex grow flex-col">
 <p class="text-slate-800 dark:text-slate-200 text-base font-medium leading-normal">Cleaner</p>
 </div>
-<input class="h-5 w-5 border-2 border-slate-300 dark:border-slate-600 bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background-light dark:focus:ring-offset-background-dark focus:ring-primary/50 checked:focus:border-primary" name="profession-selection" type="radio"/>
+<input value="cleaner" class="h-5 w-5 border-2 border-slate-300 dark:border-slate-600 bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background-light dark:focus:ring-offset-background-dark focus:ring-primary/50 checked:focus:border-primary" name="profession-selection" type="radio"/>
 </label>
 </div>
     <div class="flex px-4 py-6 justify-center">
-    <button onclick="window.location.href='helperdash.html'" class="flex w-full max-w-xs cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-slate-50 text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors disabled:bg-slate-300 dark:disabled:bg-slate-700 disabled:text-slate-500 dark:disabled:text-slate-400 disabled:cursor-not-allowed">
+    <button id="continueBtn" class="flex w-full max-w-xs cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-slate-50 text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors disabled:bg-slate-300 dark:disabled:bg-slate-700 disabled:text-slate-500 dark:disabled:text-slate-400 disabled:cursor-not-allowed">
     <span class="truncate">Continue</span>
     </button>
     </div>
@@ -96,4 +96,31 @@
 </div>
 </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const btn = document.getElementById('continueBtn');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    const sel = document.querySelector('input[name="profession-selection"]:checked');
+    if (!sel) {
+      alert('Please select a profession to continue.');
+      return;
+    }
+    const val = sel.value;
+    let dest = 'helperdash.html';
+    if (val === 'electrician') dest = 'helperdashe.html';
+    else if (val === 'plumber') dest = 'helpdashp.html';
+    else if (val === 'cleaner') dest = 'helpdashc.html';
+
+    // Optionally persist selected profession
+    try {
+      localStorage.setItem('userProfession', val);
+    } catch (e) { /* ignore */ }
+
+    window.location.href = dest;
+  });
+});
+</script>
+
 </body></html>
