@@ -184,47 +184,54 @@ Completed
 </div>
 
 <script>
-// Check if there's a new request to add and fill the first empty row
-function fillNewRequest() {
-  const newRequestData = localStorage.getItem('newRequestToAdd');
+// Populate empty cells with stored request data
+function p() {
+  // Get all stored requests
+  const allRequests = JSON.parse(localStorage.getItem('allRequests') || '[]');
+  const emptyRows = document.querySelectorAll('.empty-request-row');
   
-  if (newRequestData) {
-    try {
-      const newRequest = JSON.parse(newRequestData);
-      
-      // Find the first empty row
-      const emptyRows = document.querySelectorAll('.empty-request-row');
-      if (emptyRows.length > 0) {
-        const firstEmpty = emptyRows[0];
-        
-        // Fill in the data
-        const serviceCell = firstEmpty.querySelector('.service-cell');
-        const requestIdCell = firstEmpty.querySelector('.request-id-cell');
-        const dateCell = firstEmpty.querySelector('.date-cell');
-        const statusCell = firstEmpty.querySelector('.status-cell');
-        
-        if (serviceCell) serviceCell.textContent = newRequest.jobTitle;
-        if (requestIdCell) requestIdCell.textContent = '#REQ-' + newRequest.requestId;
-        if (dateCell) dateCell.textContent = newRequest.date;
-        if (statusCell) {
-          statusCell.innerHTML = '<span class="inline-flex items-center rounded-full bg-orange-100 dark:bg-orange-900/50 px-2.5 py-0.5 text-xs font-medium text-orange-800 dark:text-orange-300">Pending</span>';
-        }
-        
-        // Set data-status so filtering works and remove the empty marker
-        firstEmpty.setAttribute('data-status', 'pending');
-        firstEmpty.classList.remove('empty-request-row');
-      }
-      
-      // Clear the localStorage
-      localStorage.removeItem('newRequestToAdd');
-    } catch (error) {
-      console.error('Error filling new request:', error);
+  // Fill empty rows with stored requests
+  let emptyIndex = 0;
+  for (let i = 0; i < allRequests.length && emptyIndex < emptyRows.length; i++) {
+    const req = allRequests[i];
+    const row = emptyRows[emptyIndex];
+    
+    const serviceCell = row.querySelector('.service-cell');
+    const requestIdCell = row.querySelector('.request-id-cell');
+    const dateCell = row.querySelector('.date-cell');
+    const statusCell = row.querySelector('.status-cell');
+    
+    if (serviceCell) serviceCell.textContent = req.jobTitle || '-';
+    if (requestIdCell) requestIdCell.textContent = '#REQ-' + (req.requestId || '?');
+    if (dateCell) dateCell.textContent = req.date || '-';
+    if (statusCell) {
+      const statusColor = getStatusColor(req.status);
+      statusCell.innerHTML = `<span class="inline-flex items-center rounded-full ${statusColor.bg} px-2.5 py-0.5 text-xs font-medium ${statusColor.text}">${req.status || 'Unknown'}</span>`;
     }
+    
+    row.setAttribute('data-status', req.status || 'pending');
+    row.classList.remove('empty-request-row');
+    
+    emptyIndex++;
   }
 }
 
-// Apply a filter to show rows matching a status
-function applyFilter(filter) {
+// Get color classes based on status
+function getStatusColor(status) {
+  switch ((status || '').toLowerCase()) {
+    case 'pending':
+      return { bg: 'bg-orange-100 dark:bg-orange-900/50', text: 'text-orange-800 dark:text-orange-300' };
+    case 'assigned':
+      return { bg: 'bg-blue-100 dark:bg-blue-900/50', text: 'text-blue-800 dark:text-blue-300' };
+    case 'completed':
+      return { bg: 'bg-green-100 dark:bg-green-900/50', text: 'text-green-800 dark:text-green-300' };
+    default:
+      return { bg: 'bg-gray-100 dark:bg-gray-900/50', text: 'text-gray-800 dark:text-gray-300' };
+  }
+}
+
+// Apply filter to show rows by status
+function f(filter) {
   const tbody = document.querySelector('tbody');
   if (!tbody) return;
   const rows = tbody.querySelectorAll('tr');
@@ -233,12 +240,11 @@ function applyFilter(filter) {
     if (filter === 'all') {
       row.style.display = '';
     } else {
-      if (status === filter) row.style.display = '';
-      else row.style.display = 'none';
+      row.style.display = (status === filter) ? '' : 'none';
     }
   });
 
-  // update active button styling
+  // Update active button styling
   document.querySelectorAll('.filter-btn').forEach(btn => {
     if (btn.dataset.filter === filter) {
       btn.classList.remove('bg-white','dark:bg-neutral-800','border','border-neutral-300','dark:border-neutral-700');
@@ -252,12 +258,11 @@ function applyFilter(filter) {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-  fillNewRequest();
-  applyFilter('all');
+  p(); // populate table with stored requests
+  f('all'); // show all requests by default
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', function() {
-      const f = this.dataset.filter || 'all';
-      applyFilter(f);
+      f(this.dataset.filter || 'all');
     });
   });
 });

@@ -260,16 +260,21 @@
       // Also store new request for dashboard to pick up
       localStorage.setItem('newRequestToAdd', JSON.stringify(newRequest));
 
-      // Attempt to save on server (best-effort) then redirect
+      // Save on server, organized by job type
       fetch('save_request.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-      }).catch(err => console.warn('save_request failed', err))
-        .finally(() => {
-          // Redirect user to customer dashboard
-          window.location.href = 'costumerdash.html';
-        });
+      })
+      .then(res => res.json())
+      .then(result => {
+        console.log('Request saved:', result);
+      })
+      .catch(err => console.warn('save_request failed', err))
+      .finally(() => {
+        // Redirect user to customer dashboard
+        window.location.href = 'costumerdash.html';
+      });
     });
   });
 </script>
